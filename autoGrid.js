@@ -186,8 +186,8 @@ async function manage_grid(client,grid, ticker) {
             const lastPrice = parseFloat(ticker['lastPrice'])
             const conditionMax = 1.04*lastPrice
             const conditionMin = 0.96*lastPrice
-            if (lastPrice >= conditionMin && lastPrice <= conditionMax) {
-                console.log(getNowFormatDate(),`checking order...  lastPrice: ${lastPrice} between ${conditionMin} - ${conditionMax}`)
+            if (grid.price >= conditionMin && lastPrice <= conditionMax) {
+                console.log(getNowFormatDate(),`checking order... grid.price: ${grid.price} between ${conditionMin}-${conditionMax} listPrice is ${lastPrice}`)
                 let filled = await get_order_filled_v2(client, grid.order_id);
                 // console.log(getNowFormatDate(), `${grid.id} grid side:${grid.order_side} qty:${grid.qty}`);
                 if (filled) {
