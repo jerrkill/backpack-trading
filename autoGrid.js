@@ -194,7 +194,7 @@ async function manage_grid(client,grid, ticker) {
                         grid.order_id = await place_sell_order(client,grid.tp_price, grid.qty);
                         grid.order_side = 'Ask'
                         grid.save();
-                    } else if(gride.order_side == 'Ask') {
+                    } else if(grid.order_side == 'Ask') {
                         // 买单成交了 挂买单
                         grid.order_id = await place_buy_order(client,grid.price, grid.qty);
                         grid.order_side = 'Bid'
