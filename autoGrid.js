@@ -176,7 +176,7 @@ async function manage_grid(client,grid, ticker) {
         if (!grid.order_id) {
             // 检查价格
             console.log(getNowFormatDate(),`First place buy order`)
-            if (1.05*parseFloat(ticker['lastPrice']) >= grid.price) {
+            if (1.04*parseFloat(ticker['lastPrice']) >= grid.price) {
                 grid.order_id = await place_buy_order(client,grid.price, grid.qty);
                 grid.order_side = 'Bid'
                 grid.save();
@@ -184,8 +184,8 @@ async function manage_grid(client,grid, ticker) {
             
         } else {
             const lastPrice = parseFloat(ticker['lastPrice'])
-            const conditionMax = 1.04*lastPrice
-            const conditionMin = 0.96*lastPrice
+            const conditionMax = 1.03*lastPrice
+            const conditionMin = 0.97*lastPrice
             if (grid.price >= conditionMin && lastPrice <= conditionMax) {
                 console.log(getNowFormatDate(),`checking order... grid.price: ${grid.price} between ${conditionMin}-${conditionMax} listPrice is ${lastPrice}`)
                 let filled = await get_order_filled_v2(client, grid.order_id);
