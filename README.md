@@ -1,4 +1,4 @@
-# auto_trade_backpack_exchange
+# trading
 
 
 Auto trade on Backpack exchange with Javascript:
@@ -30,4 +30,16 @@ CAPITAL_PER_GRID=
 
 ```
 node ./autoGrid.js
+```
+
+
+
+node install
+
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+source ~/.profile
+
+nvm install v18.19.0
 ```
