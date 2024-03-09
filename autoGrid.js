@@ -12,7 +12,7 @@ const GRID_CENTER_PRICE = process.env.GRID_CENTER_PRICE
 const NUMBER_OF_GRIDS = process.env.NUMBER_OF_GRIDS
 const CAPITAL_PER_GRID = process.env.CAPITAL_PER_GRID
 const PRICE_DECIMAL = process.env.PRICE_DECIMAL
-const QYT_DECIMAL = process.env.QTY_DECIMAL
+const QTY_DECIMAL = process.env.QTY_DECIMAL
 /////////////
 
 function sleep(ms) {
