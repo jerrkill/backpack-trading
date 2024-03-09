@@ -183,22 +183,24 @@ async function manage_grid(client,grid, ticker) {
             const lastPrice = parseFloat(ticker['lastPrice'])
             const conditionMax = 1.04*lastPrice
             const conditionMin = 0.96*lastPrice
-            if (lastPrice >= conditionMin && lastPrice <= conditionMax)
-            let filled = await get_order_filled_v2(client, grid.order_id);
-            console.log(getNowFormatDate(), `${grid.id} grid side:${grid.order_side} qty:${grid.qty}`);
-            if (filled) {
-                if (grid.order_side == 'Bid') {
-                    // 如果是买单完成，挂卖单
-                    grid.order_id = await place_sell_order(client,grid.tp_price, grid.qty);
-                    grid.order_side = 'Ask'
-                    grid.save();
-                } else if(gride.order_side == 'Ask') {
-                    // 否则，挂买单
-                    grid.order_id = await place_buy_order(client,grid.price, grid.qty);
-                    grid.order_side = 'Bid'
-                    grid.save();
+            if (lastPrice >= conditionMin && lastPrice <= conditionMax) {
+                let filled = await get_order_filled_v2(client, grid.order_id);
+                console.log(getNowFormatDate(), `${grid.id} grid side:${grid.order_side} qty:${grid.qty}`);
+                if (filled) {
+                    if (grid.order_side == 'Bid') {
+                        // 买单成交了 挂卖单
+                        grid.order_id = await place_sell_order(client,grid.tp_price, grid.qty);
+                        grid.order_side = 'Ask'
+                        grid.save();
+                    } else if(gride.order_side == 'Ask') {
+                        // 买单成交了 挂买单
+                        grid.order_id = await place_buy_order(client,grid.price, grid.qty);
+                        grid.order_side = 'Bid'
+                        grid.save();
+                    }
                 }
             }
+            
         }
     // 如果订单正在进行中，不做任何操作
     } catch (e) {
