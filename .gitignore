@@ -1,0 +1,13 @@
+.idea
+*.DS_Store
+/vendor
+/node_modules
+/coverage
+sftp-config.json
+composer.lock
+.subsplit
+.php_cs.cache
+/cache/*
+*.tar
+*.tar.gz
+.env
