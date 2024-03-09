@@ -11,6 +11,8 @@ const SYMBOL_PAIR = process.env.SYMBOL_PAIR
 const GRID_CENTER_PRICE = process.env.GRID_CENTER_PRICE
 const NUMBER_OF_GRIDS = process.env.NUMBER_OF_GRIDS
 const CAPITAL_PER_GRID = process.env.CAPITAL_PER_GRID
+const PRICE_DECIMAL = process.env.PRICE_DECIMAL
+const QYT_DECIMAL = process.env.QTY_DECIMAL
 /////////////
 
 function sleep(ms) {
@@ -157,8 +159,8 @@ function initializeGrids(gridCenterPrice, profitPerGridPercentage, numberOfGrids
             let profitMultiplier = 1 + (profitPerGridPercentage / 100);
             let gridPrice = gridCenterPrice * Math.pow(profitMultiplier, i);
             let tpPrice = gridPrice * profitMultiplier;
-            let qty = (capitalPerGrid/gridPrice).toFixed(4).toString()
-            let grid = new Grid(gridId, gridPrice.toFixed(4), tpPrice.toFixed(4), capitalPerGrid, qty);
+            let qty = (capitalPerGrid/gridPrice).toFixed(QTY_DECIMAL).toString()
+            let grid = new Grid(gridId, gridPrice.toFixed(PRICE_DECIMAL), tpPrice.toFixed(PRICE_DECIMAL), capitalPerGrid, qty);
             grids.push(grid);
             grid.save(); // 保存新计算的网格状态
         }
