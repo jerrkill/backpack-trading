@@ -167,13 +167,12 @@ function initializeGrids(gridCenterPrice, profitPerGridPercentage, numberOfGrids
 }
 
 // 管理单个网格
-async function manage_grid(client,grid) {
+async function manage_grid(client,grid, ticker) {
     try {
         console.log(getNowFormatDate(),`process grid ${grid.id}:`+JSON.stringify(grid))
             // 如果没有挂单
         if (!grid.order_id) {
             // 检查价格
-            ticker = await client.Ticker({symbol: SYMBOL_PAIR});
             if (1.05*parseFloat(ticker['lastPrice']) >= grid.price) {
                 grid.order_id = await place_buy_order(client,grid.price, grid.qty);
                 grid.order_side = 'Bid'
@@ -181,6 +180,10 @@ async function manage_grid(client,grid) {
             }
             
         } else {
+            const lastPrice = parseFloat(ticker['lastPrice'])
+            const conditionMax = 1.04*lastPrice
+            const conditionMin = 0.96*lastPrice
+            if (lastPrice >= conditionMin && lastPrice <= conditionMax)
             let filled = await get_order_filled_v2(client, grid.order_id);
             console.log(getNowFormatDate(), `${grid.id} grid side:${grid.order_side} qty:${grid.qty}`);
             if (filled) {
@@ -209,8 +212,9 @@ async function manage_grid(client,grid) {
 // 假设这是一个周期性运行的函数
 async function init(client, grids) {
     while (true) {
+        const ticker = await client.Ticker({symbol: SYMBOL_PAIR});
         for (let grid of grids) {
-            await manage_grid(client, grid);
+            await manage_grid(client, grid, ticker);
             await sleep(40)
         }
         await sleep(1000*60)
