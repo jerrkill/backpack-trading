@@ -221,9 +221,9 @@ async function init(client, grids) {
         const ticker = await client.Ticker({symbol: SYMBOL_PAIR});
         for (let grid of grids) {
             await manage_grid(client, grid, ticker);
-            await sleep(10)
+            await sleep(5)
         }
-        await sleep(1000*3)
+        await sleep(1000*2)
     }
 }
 
